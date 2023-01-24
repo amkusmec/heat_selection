@@ -36,4 +36,4 @@ ggplot(pp, aes(x = X)) + theme_classic() +
   labs(x = "Precipitation (mm)", y = "% yield/mm") + 
   theme(axis.title = element_text(face = "bold"), 
         strip.text = element_text(face = "bold"))
-ggsave("figures/revision1/prcp_functions.png", width = 6, height = 2.5, units = "in")
+ggsave("figures/prcp_functions.png", width = 6, height = 2.5, units = "in")

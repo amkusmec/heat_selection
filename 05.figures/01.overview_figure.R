@@ -17,5 +17,5 @@ gp <- arrangeGrob(ggplotGrob(p_map), ggplotGrob(p_trends),
                   layout_matrix = matrix(c(1, 1, 1, 1, 2, 2, 2, 2, 
                                            3, 3, 4, 4, 2, 2, 2, 2), 
                                          nrow = 2, byrow = TRUE))
-ggsave("figures/revision1/overview_figure.png", gp, 
+ggsave("figures/overview_figure.png", gp, 
        width = 16, height = 8, units = "in")

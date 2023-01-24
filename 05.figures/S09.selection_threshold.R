@@ -32,5 +32,5 @@ ggplot(sel_sig) + theme_classic() +
   theme(axis.title = element_text(face = "bold"), 
         legend.title = element_text(face = "bold"), 
         strip.text = element_text(face = "bold"))
-ggsave("figures/revision1/selection_thresholds.png", 
+ggsave("figures/selection_thresholds.png", 
        width = 9, height = 3.5, units = "in")

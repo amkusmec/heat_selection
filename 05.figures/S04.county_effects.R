@@ -73,5 +73,5 @@ p_map <- ggplot() + theme_classic() +
 
 gp <- arrangeGrob(ggplotGrob(p_map), ggplotGrob(p_comp), 
                   layout_matrix = matrix(c(1, 1, 2), nrow = 1))
-ggsave("figures/revision1/county_effects.png", gp, 
+ggsave("figures/county_effects.png", gp, 
        width = 9, height = 3, units = "in")

@@ -14,5 +14,5 @@ p_cor <- p_cor + labs(tag = "C")
 
 gp <- arrangeGrob(ggplotGrob(p_all), ggplotGrob(p_temp), ggplotGrob(p_cor), 
                   layout_matrix = matrix(c(1:3, 3), nrow = 2, byrow = TRUE))
-ggsave("figures/revision1/variance_figure.png", gp, 
+ggsave("figures/variance_figure.png", gp, 
        width = 6, height = 6, units = "in")

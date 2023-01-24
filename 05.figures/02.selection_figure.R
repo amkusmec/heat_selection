@@ -20,5 +20,5 @@ gp <- arrangeGrob(ggplotGrob(p_fixed), ggplotGrob(p_int), ggplotGrob(p_selection
                                            2, 3, 3, 5, 5, 5, 5, 5,  
                                            2, 3, 3, 5, 5, 5, 5, 5), 
                                          nrow = 4, byrow = TRUE))
-ggsave("figures/revision1/selection_figure.png", gp, 
+ggsave("figures/selection_figure.png", gp, 
        width = 12, height = 7, units = "in")

@@ -46,4 +46,4 @@ ggplot(mat_max) + theme_classic() +
   theme(axis.title = element_text(face = "bold"), 
         legend.title = element_text(face = "bold"), 
         strip.text = element_text(face = "bold"))
-ggsave("figures/revision1/usda_maturity.png", width = 8, height = 3, units = "in")
+ggsave("figures/usda_maturity.png", width = 8, height = 3, units = "in")

@@ -38,5 +38,5 @@ ggplot(v) + theme_classic() +
   labs(x = "", y = "") + guides(colour = "none") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1), 
         strip.text = element_text(face = "bold"))
-ggsave("figures/revision1/yield_cv.png", width = 8, height = 5, units = "in")
+ggsave("figures/yield_cv.png", width = 8, height = 5, units = "in")
 

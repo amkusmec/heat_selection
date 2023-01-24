@@ -43,4 +43,4 @@ ggplot() + theme_classic() +
   labs(x = "", y = "Julian day") + 
   theme(axis.title = element_text(face = "bold"), 
         strip.text = element_text(face = "bold"))
-ggsave("figures/revision1/planting_trends.png", width = 8, height = 5, units = "in")
+ggsave("figures/planting_trends.png", width = 8, height = 5, units = "in")

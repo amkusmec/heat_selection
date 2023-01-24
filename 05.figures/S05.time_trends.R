@@ -47,4 +47,4 @@ ggplot(times, aes(x = Year)) + theme_classic() +
   guides(colour = "none", fill = "none") + 
   theme(axis.title = element_text(face = "bold"), 
         strip.text = element_text(face = "bold"))
-ggsave("figures/revision1/time_trends.png", width = 6, height = 4.5, units = "in")
+ggsave("figures/time_trends.png", width = 6, height = 4.5, units = "in")

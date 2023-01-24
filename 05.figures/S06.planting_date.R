@@ -34,4 +34,4 @@ ggplot(pday, aes(x = Basis)) + theme_classic() +
   scale_x_discrete(labels = c("Cubic", "Constant")) + 
   labs(x = "", y = "% yield/Julian day") + 
   theme(axis.title = element_text(face = "bold"))
-ggsave("figures/revision1/planting_date.png", width = 3, height = 2, units = "in")
+ggsave("figures/planting_date.png", width = 3, height = 2, units = "in")
