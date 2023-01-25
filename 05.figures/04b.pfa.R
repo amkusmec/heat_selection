@@ -1,3 +1,4 @@
+# Plot principal functions analysis results for the cubic B-spline basis
 
 pf_perc <- read_csv("data/regression_results2/pfa_variance.csv") %>% 
   filter(Basis == "CUB") %>% 

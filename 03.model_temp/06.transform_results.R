@@ -5,15 +5,9 @@ library(splines2)
 
 # List of spline parameters
 #  - STEP = piece-wise constant with knots at 3 degree intervals
-#  - LIN  = piece-wise linear with knots at GDD threshold
 #  - CUB  = piece-wise cubic with optimal knots
 TEMP_eval <- -1:41
 TEMP_range <- range(TEMP_eval)
-# basis_par <- list(
-#     "STEP" = list("Order" = 0L, "Knots" = seq(TEMP_range[1], TEMP_range[2], 3)), 
-#     "LIN"  = list("Order" = 1L, "Knots" = sort(c(TEMP_range, 8, 30))), 
-#     "CUB"  = list("Order" = 3L, "Knots" = quantile(TEMP_eval, seq(0, 1, length.out = 5L)))
-#   )
 basis_par <- list(
   "STEP" = list("Order" = 0L, "Knots" = seq(TEMP_range[1], TEMP_range[2], 3)), 
   "CUB"  = list("Order" = 3L, "Knots" = quantile(TEMP_eval, seq(0, 1, length.out = 5L)))
@@ -27,11 +21,6 @@ for (b in names(basis_par)) {
   rms <- sapply(bn, function(x) attr(reg_dat[[x]], "scaled:scale"))
   
   # Reconstruct the basis matrix
-  # bs_obj <- create.bspline.basis(TEMP_range, norder = basis_par[[b]]$Order, 
-  #                                breaks = basis_par[[b]]$Knots)
-  # H <- eval.basis(TEMP_eval, bs_obj)
-  # Ha <- cbind(matrix(1, ncol = 1, nrow = length(TEMP_eval)), H)
-  
   H <- bSpline(TEMP_eval, knots = basis_par[[b]]$Knots[2:(length(basis_par[[b]]$Knots) - 1)], 
                degree = basis_par[[b]]$Order, intercept = FALSE)
   Ha <- rbind(matrix(c(1, rep(0, ncol(H))), nrow = 1),
@@ -135,24 +124,6 @@ for (b in names(basis_par)) {
   
   # Intermediate clean-up
   rm(county, reff, years, deg); gc()
-  
-  # ### Random temperature effect reliabilities
-  # rrel <- paste0("data/bootstraps/", b, "_rrel_raw.rds") %>% read_rds()
-  # rel <- rrel %>% 
-  #   map(function(X) {
-  #       tt <- apply(X, 3, function(D) diag(Ha %*% D %*% t(Ha)))
-  #       ms <- setdiff(varieties, colnames(tt))
-  #       tt <- cbind(tt, 
-  #                   matrix(as.numeric(NA), nrow = nrow(tt), ncol = length(ms), 
-  #                          dimnames = list(NULL, ms)))
-  #       tt[, order(colnames(tt))]
-  #     }) %>% 
-  #   abind(along = 3)
-  # write_rds(rel, file = paste0("data/regression_results/", b, "_results/", 
-  #                              b, "_temperature_reliability.rds"))
-  # 
-  # # Intermediate clean-up
-  # rm(rrel, rel); gc()
   
   ### Variance components
   vc <- paste0("data/bootstraps2/", b, "_vc_raw.csv") %>% 

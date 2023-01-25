@@ -57,20 +57,6 @@ weather <- inner_join(weather,
                       dplyr::select(site_bins, -n), 
                       by = c("Year", "State", "County"))
 
-# weather %>% 
-#   pivot_longer(Fixed:Variable, names_to = "Season", values_to = "Time") %>% 
-#   ggplot(aes(x = Degree, y = Time)) + theme_bw() +
-#     geom_boxplot(aes(group = Degree), outlier.shape = 1, outlier.colour = "red") +
-#     scale_x_continuous(breaks = seq(-30, 50, 5)) + 
-#     facet_wrap(~ Season, ncol = 1, strip.position = "right")
-
-# # Do the same plot with the differences
-# weather %>% 
-#   mutate(Difference = Fixed - Variable) %>% 
-#   ggplot(aes(x = Degree, y = Difference)) + theme_bw() + 
-#     geom_boxplot(aes(group = Degree), outlier.shape = 1, outlier.colour = "red") + 
-#     scale_x_continuous(breaks = seq(-30, 50, 5))
-
 
 # Identify trial county centroids -----------------------------------------
 trials_unique <- read_rds("data/trial_data/trials_unique.rds")

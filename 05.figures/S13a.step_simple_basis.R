@@ -1,4 +1,4 @@
-
+# Plot simple basis analysis results for constant B-spline basis
 
 sb_var <- read_csv("data/regression_results2/simple_basis_variance.csv") %>% 
   filter(Basis == "STEP", SB <= 3) %>% 

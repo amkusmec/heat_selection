@@ -29,7 +29,6 @@ county_intersect <- trials %>%
 # Restrict harvest dates to the end of September
 trials_unique <- trials %>%
   mutate(COUNTYNS = county_intersect$COUNTYNS) %>%
-  # distinct(Year, PMONTH, HMONTH, COUNTYNS, .keep_all = TRUE) %>%
   group_by(State, Year, COUNTYNS) %>%
   summarise(County = list(County), 
             Planted = min(Planted), 
@@ -64,16 +63,8 @@ prism <- list.files("data/prism/subset", "*\\.csv", full.names = TRUE) %>%
   summarise(Cells = list(Cell)) %>%
   ungroup()
 
-# sites <- read_lines("data/problem_trials.txt")
-# trials_unique <- trials_unique %>%
-#   mutate(Key = paste(Year, State, COUNTYNS, sep = "_")) %>%
-#   filter(Key %in% sites)
-
 rm(counties, county_intersect, trials, prism_files)
 gc()
-
-# temp <- trials_unique %>%
-#   filter(State == "IOWA", Year %% 10 == 0, COUNTYNS == "00465259")
 
 
 res <- mclapply(1:nrow(trials_unique), function(i) {

@@ -1,4 +1,4 @@
-
+# Plot the fixed effects coefficient function for temperature responses
 
 fixf <- read_rds("data/regression_results2/CUB_results/CUB_temperature_fixed.rds") %>% 
   `[`(-1, )

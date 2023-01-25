@@ -3,7 +3,6 @@ library(abind)
 source("src/bc_sum.R")
 
 
-# basis <- c("CUB", "LIN", "STEP")
 basis <- c("CUB", "STEP")
 tt <- c("Mean", "Lower", "Upper")
 
@@ -35,8 +34,6 @@ vc <- vc %>%
 
 knots <- bind_rows(tibble(Basis = "CUB", 
                           Knots = quantile(-1:41, seq(0, 1, length.out = 5)[2:4])), 
-                   # tibble(Basis = "LIN", 
-                   #        Knots = c(8, 30)), 
                    tibble(Basis = "STEP", 
                           Knots = seq(2, 38, 3))) %>% 
   mutate(Knots = Knots - 0.5)

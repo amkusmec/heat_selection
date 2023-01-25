@@ -1,3 +1,4 @@
+# Plot the genetic correlation function for the constant B-spline basis
 
 cor_func <- apply(vc, 3, cov2cor, simplify = FALSE) %>% 
   abind(along = 3) %>% 

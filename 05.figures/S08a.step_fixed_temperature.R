@@ -1,4 +1,4 @@
-
+# Plot the fixed effect coefficient function for the constant B-spline basis
 
 fixf <- read_rds("data/regression_results2/STEP_results/STEP_temperature_fixed.rds") %>% 
   `[`(-(1:3), )

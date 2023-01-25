@@ -16,7 +16,6 @@ hyb_counts <- read_rds("data/regression_data/reg_dat_CUB.rds") %>%
   ungroup()
 gr_lvls <- unique(hyb_counts$Year) %>% sort()
 
-# basis <- c("CUB", "LIN", "STEP")
 basis <- c("CUB", "STEP")
 
 cohort_means <- map(basis, function(b) {
@@ -84,60 +83,6 @@ cohort_cov_post <- map2_df(basis, cohort_cov, function(b, a) {
   filter(Temperature >= 0) %>% 
   filter(!(Basis == "STEP" & Temperature < 2))
 
-ggplot(filter(cohort_post, Temperature == "41")) + theme_bw() + 
-  geom_ribbon(aes(x = Cohort, ymin = Lower, ymax = Upper), fill = "grey50", alpha = 0.5) + 
-  geom_line(aes(x = Cohort, y = Mean)) + 
-  geom_hline(yintercept = 0, linetype = 2) + 
-  facet_wrap(Basis ~ .)
-
-ggplot(filter(cohort_cov_post, Temperature == "35")) + theme_bw() + 
-  geom_ribbon(aes(x = Cohort, ymin = Lower, ymax = Upper), fill = "grey50", alpha = 0.5) + 
-  geom_line(aes(x = Cohort, y = Mean)) + 
-  geom_hline(yintercept = 0, linetype = 2) + 
-  facet_wrap(Basis ~ .)
-
-ggplot(cohort_cov_post) + theme_classic() + 
-  geom_tile(aes(x = Cohort, y = Temperature, fill = Mean)) + 
-  scale_fill_steps2(limits = c(-1, 1), show.limits = TRUE, n.breaks = 10) + 
-  scale_x_continuous(breaks = seq(1940, 2010, 10), 
-                     labels = seq(1940, 2010, 10)) + 
-  facet_wrap(~ Basis, ncol = 1, strip.position = "right") + 
-  labs(x = "", y = expression("Temperature ("*degree*"C)"), 
-       fill = expression("cor("*l[i]*","*beta[ih]*")")) + 
-  theme(strip.text = element_text(face = "bold"))
-ggsave("figures/int_temp_cor.png", width = 8, height = 4, units = "in")
-
-# bind_rows(mutate(cohort_post, Variable = "Mean", Temperature = as.integer(Temperature)), 
-#           mutate(cohort_cov_post, Variable = "Covariance")) %>% 
-#   filter(Temperature == "35") %>% 
-#   ggplot(aes(x = Cohort)) + theme_bw() + 
-#     geom_line(aes(y = Mean)) + 
-#     geom_hline(yintercept = 0, linetype = 2) + 
-#     facet_grid(Variable ~ Basis, scales = "free_y")
-# 
-# bind_rows(mutate(cohort_post, Variable = "Mean", Temperature = as.integer(Temperature)), 
-#           mutate(cohort_cov_post, Variable = "Covariance")) %>% 
-#   filter(Temperature == 35) %>% 
-#   select(-Lower, -Upper) %>% 
-#   pivot_wider(names_from = "Variable", values_from = "Mean") %>% 
-#   ggplot() + theme_bw() + 
-#     geom_path(aes(x = Mean, y = Covariance)) + 
-#     geom_point(aes(x = Mean, y = Covariance, colour = Cohort)) + 
-#     geom_hline(yintercept = 0, linetype = 2) + 
-#     geom_vline(xintercept = 0, linetype = 2) + 
-#     scale_colour_viridis_b(n.breaks = 8, show.limits = TRUE) + 
-#     facet_wrap(Basis ~ .)
-# 
-# bind_rows(mutate(cohort_post, Variable = "Mean", Temperature = as.integer(Temperature)), 
-#           mutate(cohort_cov_post, Variable = "Covariance")) %>% 
-#   filter(!is.na(Temperature)) %>% 
-#   filter(!is.na(Lower)) %>% 
-#   select(-Lower, -Upper) %>% 
-#   pivot_wider(names_from = "Variable", values_from = "Mean") %>% 
-#   group_by(Basis, Temperature) %>% 
-#   summarise(R = cor(Mean, Covariance, use = "complete"), 
-#             .groups = "drop")
-
 cmat <- cohort_post %>% 
   mutate(Temperature = as.integer(Temperature)) %>% 
   filter(Basis == "CUB", Temperature >= 30) %>% 
@@ -170,21 +115,15 @@ cluster_lbl <- c(`3` = "30-35~degree~C",
                  `1` = "37+~degree~C")
 
 ggplot(cohort_post_sc) + theme_bw() + 
-  # annotate("rect", xmin = 1933, xmax = 1943, ymin = -Inf, ymax = Inf, 
-  #          fill = "red", alpha = 0.3) + 
-  # annotate("rect", xmin = 2005, xmax = 2015, ymin = -Inf, ymax = Inf, 
-  #          fill = "blue", alpha = 0.3) + 
   geom_smooth(aes(x = Cohort, y = Mean, colour = Temperature, group = Temperature),  
               formula = y ~ splines::bs(x, 8), method = "lm", se = FALSE, size = 0.75) + 
   geom_hline(yintercept = 0, linetype = 2, colour = "black") + 
   scale_colour_stepsn(colours = cohort_sc(length(30:41)), 
                       n.breaks = length(30:41), show.limits = TRUE) +  
-  # scale_linetype_manual(values = c("TRUE" = 1, "FALSE" = 2)) + 
   scale_x_continuous(breaks = seq(1920, 2020, 20), labels = seq(1920, 2020, 20)) + 
   facet_wrap(~ value, ncol = 1, strip.position = "right", 
              labeller = as_labeller(cluster_lbl, default = label_parsed)) + 
   labs(x = "", y = "Scaled coefficient", colour = expression(degree*"C")) + 
-  # guides(linetype = "none") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1), 
         panel.background = element_rect(fill = "grey80"), 
         strip.background = element_rect(fill = "white", colour = "black"), 
@@ -194,24 +133,3 @@ ggplot(cohort_post_sc) + theme_bw() +
         legend.title = element_text(face = "bold", size = 14), 
         legend.key.height = unit(0.15, "npc"))
 ggsave("figures/cohort_clusters.png", width = 6, height = 4.5, units = "in")
-
-cohort_post %>% 
-  mutate(Temperature = as.integer(Temperature)) %>% 
-  filter(Temperature >= 30) %>% 
-  ggplot() + theme_bw() + 
-    geom_smooth(aes(x = Cohort, y = Mean, colour = Temperature, linetype = Basis), 
-                formula = y ~ splines::bs(x, 8), method = "lm", se = FALSE, size = 0.75) + 
-    geom_hline(yintercept = 0, linetype = 2) + 
-    facet_wrap(~ Temperature, scales = "free_y")
-
-cohort_post %>% 
-  mutate(Temperature = as.integer(Temperature)) %>% 
-  filter(Temperature >= 30) %>% 
-  group_by(Basis, Temperature) %>% 
-  mutate(Mean = scale(Mean) %>% drop()) %>% 
-  ungroup() %>% 
-  ggplot() + theme_bw() + 
-    geom_smooth(aes(x = Cohort, y = Mean, colour = Temperature, group = Temperature), 
-                formula = y ~ splines::bs(x, 8), method = "lm", se = FALSE, size = 0.75) + 
-    geom_hline(yintercept = 0, linetype = 2) + 
-    facet_wrap(~ Basis, ncol = 1, scales = "free_y")

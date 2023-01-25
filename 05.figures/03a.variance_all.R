@@ -1,3 +1,4 @@
+# Plot the relative variance components
 
 vc <- read_rds("data/regression_results2/CUB_results/CUB_temperature_vc.rds") %>% 
   `[`(-2, -2, )

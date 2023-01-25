@@ -34,7 +34,7 @@ for (i in seq_along(idx)) {
   url <- paste("http://nominatim.openstreetmap.org/search?city=", 
                noll$URL_Town[idx[i]], "&county=", noll$URL_County[idx[i]], 
                "&state=", noll$URL_State[idx[i]], "&format=json", 
-               "&email=amkusmec@iastate.edu", sep = "")
+               "&email=", sep = "")
   
   tries <- 0
   repeat {

@@ -1,3 +1,4 @@
+# Plot the relative variance components from the constant B-spline basis model
 
 vc <- read_rds("data/regression_results2/STEP_results/STEP_temperature_vc.rds") %>% 
   `[`(-(2:4), -(2:4), )

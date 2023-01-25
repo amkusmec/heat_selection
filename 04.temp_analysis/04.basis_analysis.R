@@ -4,7 +4,6 @@ library(prinsimp)
 source("src/bc_sum.R")
 
 
-# basis <- c("CUB", "LIN", "STEP")
 basis <- c("CUB", "STEP")
 tt <- c("Mean", "Lower", "Upper")
 TEMP_eval2 <- -1:41
@@ -78,7 +77,6 @@ simple <- map_df(sim, `[[`, 2L)
 ggplot(filter(varperc, SB <= 5), aes(x = SB, colour = Basis)) + theme_bw() + 
   geom_linerange(aes(ymin = Lower, ymax = Upper), position = position_dodge(0.6)) + 
   geom_point(aes(y = Mean), position = position_dodge(0.6)) + 
-  # scale_x_continuous(limits = c(0, 4.5)) + 
   scale_y_continuous(labels = scales::percent) + 
   scale_colour_brewer(type = "qual", palette = "Dark2") + 
   labs(x = "Simple basis function", y = "% variance explained", colour = "")

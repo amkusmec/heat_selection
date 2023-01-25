@@ -1,4 +1,4 @@
-
+# Plot the correlation between cohort mean hybrid intercepts and temperature responses
 
 cov_int <- read_rds("data/regression_results2/cohort_cov_all.rds") %>% 
   `[[`(2) %>% 

@@ -1,3 +1,4 @@
+# Plot the genetic variance for responses to different temperatures
 
 vc_diag <- apply(vc[-1, -1, ], 3, diag) %>% 
   apply(1, bc_sum) %>% 

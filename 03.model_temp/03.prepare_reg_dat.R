@@ -18,11 +18,9 @@ HOURS_c <- HOURS - matrix(rowMeans(HOURS), nrow(HOURS), ncol(HOURS), byrow = FAL
 
 # List of spline parameters
 #  - STEP = piece-wise constant with knots at 3 degree intervals
-#  - LIN  = piece-wise linear with knots at GDD threshold
 #  - CUB  = piece-wise cubic with optimal knots
 basis_par <- list(
     "STEP" = list("Order" = 0L, "Knots" = seq(TEMP_range[1], TEMP_range[2], 3)), 
-    "LIN"  = list("Order" = 1L, "Knots" = sort(c(TEMP_range, 8, 30))), 
     "CUB"  = list("Order" = 3L, "Knots" = quantile(TEMP_eval, seq(0, 1, length.out = 5L)))
   )
 
@@ -76,4 +74,4 @@ ggplot(n_years) + theme_bw() +
   geom_col(aes(x = Years, y = Count), colour = "black", fill = "orange", 
            alpha = 0.8) + 
   labs(x = "# unique years", y = "# bootstraps")
-ggsave("figures/supplementary/bootstrap_years.png", width = 6, height = 4, units = "in")
+ggsave("figures/bootstrap_years.png", width = 6, height = 4, units = "in")

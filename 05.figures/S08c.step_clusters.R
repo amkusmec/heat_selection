@@ -1,3 +1,4 @@
+# Plot trajectories of temperature response coefficients
 
 cohort <- read_rds("data/regression_results2/cohort_means_all.rds") %>% 
   `[[`(2)

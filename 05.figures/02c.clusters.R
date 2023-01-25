@@ -1,3 +1,4 @@
+# Plot the results of the clustering analysis on temperature response trajectories
 
 cohort_post <- read_csv("data/regression_results2/cohort_clusters.csv") %>% 
   mutate(value = case_when(value == 3 ~ 3, 

@@ -11,13 +11,6 @@ trials <- read_csv("data/trial_data/metadata/locations_gps.csv",
 min_year <- min(trials$Year)
 max_year <- max(trials$Year)
 
-# Only need part of each year
-# min_month <- trials$Planted %>%
-#   str_split("; ") %>%
-#   unlist() %>%
-#   as_date() %>%
-#   month() %>%
-#   min()
 min_month <- 1
 
 max_month <- trials$Harvested %>%

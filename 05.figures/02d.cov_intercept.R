@@ -1,4 +1,5 @@
-
+# Plot the cohort-wise correlations between hybrid intercept and temperature 
+# responses
 
 cov_int <- read_rds("data/regression_results2/cohort_cov_all.rds") %>% 
   `[[`(1) %>% 

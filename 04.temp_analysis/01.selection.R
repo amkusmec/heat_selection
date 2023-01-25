@@ -3,7 +3,6 @@ library(abind)
 source("src/bc_sum.R")
 
 
-# basis <- c("CUB", "LIN", "STEP")
 basis <- c("CUB", "STEP")
 TEMP_eval <- -1:41
 
@@ -24,22 +23,14 @@ years <- map(1:ncol(boots), function(i) {
 years_m <- reduce(years, full_join, by = "Variety", .init = years_m)
 
 
-### `lm()` assumes that numeric weights are inversely proportional to the 
-### variance of the response.
-
 sel <- map_df(basis, function(b) {
   cat(b, "\n")
   rc <- paste0("data/regression_results2/", b, "_results/", 
                b, "_temperature_random.rds") %>% 
     read_rds()
-  # rel <- paste0("data/regression_results/", b, "_results/", 
-  #               b, "_temperature_reliability.rds") %>% 
-  #   read_rds()
   
   cc <- sapply(1:(dim(rc)[1]), function(i) {
     sapply(1:(dim(rc)[3]), function(j) {
-    # sapply(1:100, function(j) {
-      # lm(rc[i, , j] ~ 1 + years$Year, weights = 1/rel[i, , j]) %>%
       lm(rc[i, , j] ~ 1 + years_m$Year, weights = years_m[[j + 2]]) %>%
         coef() %>% 
         `[`(2) %>% 
@@ -47,7 +38,6 @@ sel <- map_df(basis, function(b) {
     })
   })
   colnames(cc) <- c("Intercept", TEMP_eval)
-  # colnames(cc) <- TEMP_eval
   
   as_tibble(cc) %>% 
     mutate(Bootstrap = 1:n()) %>% 
@@ -90,7 +80,6 @@ sel_post %>%
   ggplot(aes(x = Temperature)) + theme_bw() + 
     geom_ribbon(aes(ymin = Lower, ymax = Upper), fill = "grey80", alpha = 0.5) + 
     geom_line(aes(y = Mean)) + 
-    # geom_line(aes(y = Full.1), colour = "steelblue") + 
     geom_hline(yintercept = 0, linetype = 2, colour = "red") + 
     facet_wrap(~ Basis, scales = "free_y")
 

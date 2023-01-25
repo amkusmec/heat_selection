@@ -23,11 +23,6 @@ years <- map(1:ncol(boots), function(i) {
 years_m <- reduce(years, full_join, by = "Variety", .init = years_m)
 
 y_idx <- years_m$Year >= 1975
-# years_m <- years_m[y_idx, ]
-
-
-### `lm()` assumes that numeric weights are inversely proportional to the 
-### variance of the response.
 
 sel <- map_df(basis, function(b) {
   map_df(c(TRUE, FALSE), function(yr) {
@@ -83,36 +78,6 @@ sel_post <- sel_post %>%
   filter(Temperature != -1) %>% 
   filter(!(Basis == "STEP" & Temperature %in% 0:1))
 
-
-# ggplot(filter(sel_post, Basis == "CUB", str_detect(Alpha, "5")), aes(x = Temperature)) + theme_classic() + 
-#   geom_line(aes(y = Lower, colour = Set), linetype = 2) + 
-#   geom_line(aes(y = Upper, colour = Set), linetype = 2) + 
-#   geom_line(aes(y = Mean, colour = Set), linetype = 1) + 
-#   geom_hline(yintercept = 0, linetype = 2, colour = "black") + 
-#   # facet_wrap(~ Alpha, nrow = 1, labeller = label_parsed) + 
-#   scale_colour_manual(values = c("All" = "blue", "1975" = "red")) + 
-#   scale_y_continuous(labels = scales::label_percent()) + 
-#   labs(x = expression(bold("Temperature ("*degree*"C)")), 
-#        y = "% yield/h exposure/yr", colour = "") + 
-#   theme(axis.title = element_text(face = "bold"), 
-#         strip.text = element_text(face = "bold"))
-# ggsave("figures/revision1/subset_selection.png", width = 6, height = 4, units = "in")
-# 
-# ggplot(filter(sel_post, Basis == "STEP"), aes(x = Temperature)) + theme_classic() + 
-#   geom_step(aes(y = Lower, colour = Set), linetype = 2) + 
-#   geom_step(aes(y = Upper, colour = Set), linetype = 2) + 
-#   geom_step(aes(y = Mean, colour = Set), linetype = 1) + 
-#   geom_hline(yintercept = 0, linetype = 2, colour = "black") + 
-#   facet_wrap(~ Alpha, nrow = 1, labeller = label_parsed) + 
-#   scale_colour_manual(values = c("All" = "blue", "1975" = "red")) + 
-#   scale_y_continuous(labels = scales::label_percent()) + 
-#   labs(x = expression(bold("Temperature ("*degree*"C)")), 
-#        y = "% yield/h exposure/yr", colour = "") + 
-#   theme(legend.position = "top", 
-#         legend.direction = "horizontal", 
-#         axis.title = element_text(face = "bold"), 
-#         strip.text = element_text(face = "bold"))
-
 ggplot(filter(sel_post, Temperature > -2, !str_detect(Alpha, "5")), 
        aes(x = Temperature)) + theme_classic() + 
   geom_line(aes(y = Lower, colour = Group), linetype = 2) + 
@@ -129,4 +94,4 @@ ggplot(filter(sel_post, Temperature > -2, !str_detect(Alpha, "5")),
         legend.direction = "horizontal", 
         axis.title = element_text(face = "bold"), 
         strip.text = element_text(face = "bold"))
-ggsave("figures/revision1/subset_selection.png", width = 8, height = 3.5, units = "in")
+ggsave("figures/subset_selection.png", width = 8, height = 3.5, units = "in")

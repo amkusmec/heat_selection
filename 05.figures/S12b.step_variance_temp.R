@@ -1,3 +1,5 @@
+# Plot the genetic variance for different temperature responses on the constant 
+# B-spline basis
 
 vc_diag <- apply(vc[-1, -1, ], 3, diag) %>% 
   apply(1, bc_sum) %>% 

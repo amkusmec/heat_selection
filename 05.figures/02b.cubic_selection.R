@@ -1,3 +1,4 @@
+# Plot selection results for the cubic B-spline basis
 
 sel <- read_csv("data/regression_results2/selection_full_posterior.csv") %>% 
   filter(Basis == "CUB")
