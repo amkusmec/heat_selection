@@ -12,4 +12,5 @@ p_temp <- ggplot(vc_diag, aes(x = Temperature)) + theme_classic() +
   geom_line(aes(y = Mean)) + 
   scale_y_log10() + 
   labs(x = expression(bold("Temperature ("*degree*"C)")), 
-       y = expression(bold(log[10]*"(Variance)")))
+       y = "Variance (log scale)") + 
+  theme(axis.title = element_text(face = "bold"))
