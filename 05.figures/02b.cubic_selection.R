@@ -14,6 +14,11 @@ sel_int_post <- map_df(c(0.95, 0.9), function(a) {
   # mutate(Alpha = as.character(Alpha)) %>%
   pivot_wider(names_from = "Measure", values_from = "Value")
 
+sel_int %>% 
+  rename(Temperature = Basis) %>% 
+  mutate(Temperature = "Intercept") %>% 
+  write_csv("data/supplementary_tables/ST03.intercept_slopes.csv")
+
 p_int <- ggplot(sel_int_post) + theme_classic() + 
   geom_linerange(aes(ymin = Lower, ymax = Upper), 
                  filter(sel_int_post, Alpha == 0.95), 
@@ -42,6 +47,10 @@ sel_post <- map_df(c(0.95, 0.9), function(a) {
         mutate(Alpha = a)
     }) %>% 
   mutate(Alpha = factor(Alpha))
+
+sel %>% 
+  select(Temperature, Bootstrap, Slope) %>% 
+  write_csv("data/supplementary_tables/ST04.temperature_slopes.csv")
 
 p_selection <- ggplot(sel_post, aes(x = Temperature)) + theme_classic() + 
   geom_line(aes(x = Temperature, y = Mean)) + 

@@ -33,6 +33,16 @@ sim <- map(basis, function(b) {
          simple = temp$simple[, 1:n_basis])
   })
   
+  if (b == "CUB") {
+    lapply(temp_sim, function(x) enframe(x$varperc, name = "SB", value = "Variance")) %>% 
+      bind_rows() %>% 
+      mutate(Variance = Variance/100) %>% 
+      filter(SB <= 3) %>% 
+      mutate(Bootstrap = rep(1:2000, each = 3)) %>% 
+      select(Bootstrap, everything()) %>% 
+      write_csv("data/supplementary_tables/ST10.simple_basis_variances.csv")
+  }
+  
   temp_varperc <- lapply(temp_sim, function(x) enframe(x$varperc, name = "SB", value = "V")) %>% 
     bind_rows() %>% 
     mutate(V = V/100) %>% 

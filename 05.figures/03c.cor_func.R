@@ -1,5 +1,15 @@
 # Plot the genetic correlation function for the cubic B-spline basis
 
+apply(vc, 3, cov2cor, simplify = FALSE) %>% 
+  map_df(function(m) {
+      as_tibble(m, rownames = "Temperature1") %>% 
+        pivot_longer(-Temperature1, names_to = "Temperature2", 
+                     values_to = "Correlation")
+    }) %>% 
+  mutate(Bootstrap = rep(1:2000, each = 43*43)) %>% 
+  select(Bootstrap, everything()) %>% 
+  write_csv("data/supplementary_tables/ST09.temperature_correlations.csv")
+
 cor_func <- apply(vc, 3, cov2cor, simplify = FALSE) %>% 
   abind(along = 3) %>% 
   apply(1:2, bc_sum) %>% 

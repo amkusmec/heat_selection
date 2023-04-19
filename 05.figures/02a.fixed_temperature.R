@@ -12,6 +12,11 @@ fixc <- map_df(c(0.95, 0.9), function(a) {
     }) %>% 
   mutate(Alpha = factor(Alpha))
 
+fixf2 <- as_tibble(fixf) %>% 
+  mutate(Temperature = 0:41) %>% 
+  pivot_longer(-Temperature, names_to = "Bootstrap", values_to = "Estimate") %>% 
+  mutate(Bootstrap = str_remove(Bootstrap, "V") %>% as.integer())
+write_csv(fixf2, "data/supplementary_tables/ST02.temperature_fixed_effects.csv")
 
 p_fixed <- ggplot() + theme_classic() + 
   geom_line(aes(x = Temperature, y = Value), filter(fixc, Measure == "Mean")) + 

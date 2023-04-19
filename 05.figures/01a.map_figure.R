@@ -9,6 +9,7 @@ trial_counts <- trials %>%
             Latitude = unique(Latitude), 
             n = n(), 
             .groups = "drop")
+write_csv(trial_counts, "data/supplementary_tables/ST01.trial_counts.csv")
 
 # State outlines
 state_names <- c("illinois", "iowa", "nebraska", "kansas")

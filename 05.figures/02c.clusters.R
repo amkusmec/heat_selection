@@ -5,6 +5,10 @@ cohort_post <- read_csv("data/regression_results2/cohort_clusters.csv") %>%
                            value == 2 ~ 1, 
                            value == 1 ~ 2))
 
+cohort_post %>% 
+  rename(Year = Cohort, Mean_Effect = Mean, Cluster = value) %>% 
+  write_csv("data/supplementary_tables/ST06.clustered_temperature_means.csv")
+
 sig95 <- sel_post %>% 
   filter(Alpha == "0.95") %>% 
   filter(sign(Lower) == sign(Upper)) %>% 

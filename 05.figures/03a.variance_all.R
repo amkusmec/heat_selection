@@ -20,6 +20,11 @@ vc_other <- read_csv("data/bootstraps2/CUB_vc_raw.csv") %>%
             .groups = "drop") %>% 
   mutate(grp = if_else(grp == "State", "Time", grp))
 
+bind_rows(vc_other, vc_int, vc_temp) %>% 
+  rename(Component = grp, Variance = vcov) %>% 
+  arrange(Bootstrap, Component) %>% 
+  write_csv("data/supplementary_tables/ST07.variance_components.csv")
+
 vc_all <- bind_rows(vc_other, vc_int, vc_temp) %>% 
   group_by(Bootstrap) %>% 
   mutate(Pct = vcov/sum(vcov)) %>% 

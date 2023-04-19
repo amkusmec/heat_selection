@@ -7,6 +7,16 @@ cov_int <- read_rds("data/regression_results2/cohort_cov_all.rds") %>%
 
 years <- cohort_post %>% pull(Cohort) %>% unique() %>% sort()
 
+map_df(1:(dim(cov_int)[3]), function(i) {
+      as_tibble(cov_int[, , i]) %>% 
+        mutate(Temperature = 0:41) %>% 
+        pivot_longer(-Temperature, names_to = "Year", values_to = "Correlation") %>% 
+        mutate(Year = rep_along(Temperature, years), 
+               Bootstrap = i) %>% 
+        select(Bootstrap, Temperature, Year, Correlation)
+    }) %>% 
+  write_csv("data/supplementary_tables/ST05.intercept_temperature_correlations.csv")
+
 cov_post <- map_df(c(0.95, 0.9), function(a) {
       apply(cov_int, 1:2, bc_sum, alpha = a) %>% 
         apply(3, function(x) {
