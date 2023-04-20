@@ -3,10 +3,10 @@ library(grid)
 library(gridExtra)
 source("src/bc_sum.R")
 
-source("06.figures/S08a.step_fixed_temperature.R")
-source("06.figures/S08b.step_selection.R")
-source("06.figures/S08c.step_clusters.R")
-source("06.figures/S08d.step_cov_intercept.R")
+source("06.figures/S11a.step_fixed_temperature.R")
+source("06.figures/S11b.step_selection.R")
+source("06.figures/S11c.step_clusters.R")
+source("06.figures/S11d.step_cov_intercept.R")
 
 p_fixed <- p_fixed + labs(tag = "A")
 p_int <- p_int + labs(tag = "B") 
@@ -20,5 +20,5 @@ gp <- arrangeGrob(ggplotGrob(p_fixed), ggplotGrob(p_int), ggplotGrob(p_selection
                                            2, 3, 3, 5, 5, 5, 5, 5,  
                                            2, 3, 3, 5, 5, 5, 5, 5), 
                                          nrow = 4, byrow = TRUE))
-ggsave("figures/step_selection_figure.png", gp, 
+ggsave("figures/SF11_step_selection_figure.png", gp, 
        width = 12, height = 7, units = "in")

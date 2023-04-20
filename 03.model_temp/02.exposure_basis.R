@@ -92,7 +92,7 @@ ggplot(nk_tbl) + theme_classic() +
   labs(x = "# of knots", y = "% trials", 
        fill = expression(bold(theta))) + 
   theme(axis.title = element_text(face = "bold"))
-ggsave("figures/exposure_basis_mse.png", 
+ggsave("figures/SF06_exposure_basis_mse.png", 
        width = 7, height = 3, units = "in")
 
 ### The optimum is 5 knots (2 boundary, 3 internal) for 0.05 and 0.1. The 0.01 

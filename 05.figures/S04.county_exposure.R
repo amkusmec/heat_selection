@@ -40,4 +40,4 @@ ggplot() + theme_classic() +
                     labels = scales::label_percent(accuracy = 1)) +  
   labs(x = "", y = "", fill = "Avg. % exposure\nto heat stress") + 
   theme(legend.title = element_text(size = 10, face = "bold"))
-ggsave("figures/county_exposure.png", width = 7, height = 3, units = "in")
+ggsave("figures/SF04_county_exposure.png", width = 7, height = 3, units = "in")
